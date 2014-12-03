@@ -1,0 +1,8 @@
+alldata <- read.csv("household_power_consumption.txt",sep=";", na.strings="?", colClasses=c("character", "character",rep("numeric", 7)))
+subdata <- subset(alldata, Date == "2/2/2007" | Date == "1/2/2007")
+rm(alldata)
+timdata = transform(subdata, Date = as.Date(Date, format="%d/%m/%Y"), Time=strptime(paste(Date, Time), format="%d/%m/%Y %H:%M:%S"))
+png(filename="plot2.png")
+par(mfrow=c(1,1))
+with(timdata, plot(Time, Global_active_power, type="l", ylab="Global Active Power (killowatts)", xlab=""))
+dev.off()
